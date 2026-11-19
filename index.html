@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Linguaskill University Simulator | Cambridge CEFR B1–C1</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <a href="#main-content" class="skip-link">Saltar al contenido principal</a>
+
+  <!-- Encabezado Institucional -->
+  <header class="app-header" role="banner">
+    <div class="app-header__container">
+      <div class="app-header__brand">
+        <span class="app-header__badge">MCER B1–C1 · SIMULADOR COMPLETO</span>
+        <h1 class="app-header__title">Linguaskill Cambridge Trainer</h1>
+        <p class="app-header__subtitle">Práctica Integral Universitaria · Basado en Cambridge Preparation Course</p>
+      </div>
+      <div class="app-header__actions">
+        <div class="app-header__progress" aria-live="polite">
+          <span class="app-header__score-label">Puntaje Objetivo:</span>
+          <strong id="global-score" class="app-header__score-value">0 / 24 pts</strong>
+        </div>
+        <button type="button" id="btn-generate-pdf" class="btn btn--accent">
+          Generar Reporte PDF
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Registro de Datos del Candidato -->
+  <section class="candidate-bar" aria-labelledby="candidate-section-title">
+    <div class="candidate-bar__container">
+      <h2 id="candidate-section-title" class="candidate-bar__title">Datos del Candidato</h2>
+      <form id="candidate-form" class="candidate-bar__form" novalidate>
+        <div class="form-field">
+          <label for="candidate-firstname" class="form-field__label">Nombre(s) <span aria-hidden="true">*</span></label>
+          <input type="text" id="candidate-firstname" name="firstName" class="form-field__input" required aria-required="true" placeholder="Ej. Abraham Jacob" autocomplete="given-name">
+        </div>
+        <div class="form-field">
+          <label for="candidate-lastname" class="form-field__label">Apellidos <span aria-hidden="true">*</span></label>
+          <input type="text" id="candidate-lastname" name="lastName" class="form-field__input" required aria-required="true" placeholder="Ej. Rivera Moreno" autocomplete="family-name">
+        </div>
+        <div class="form-field">
+          <label for="candidate-group" class="form-field__label">Grupo / Matrícula (Opcional)</label>
+          <input type="text" id="candidate-group" name="groupId" class="form-field__input" placeholder="Ej. TSU-ELT 5°A">
+        </div>
+      </form>
+      <p id="candidate-alert" class="candidate-bar__alert" role="alert" aria-live="assertive" hidden></p>
+    </div>
+  </section>
+
+  <!-- Navegación por Módulos -->
+  <nav class="skill-nav" aria-label="Módulos del examen Linguaskill">
+    <div class="skill-nav__list" role="tablist" aria-orientation="horizontal">
+      <button type="button" role="tab" id="tab-reading" class="skill-nav__tab skill-nav__tab--active" aria-selected="true" aria-controls="panel-reading" tabindex="0">
+        1. Reading (15 pts)
+      </button>
+      <button type="button" role="tab" id="tab-listening" class="skill-nav__tab" aria-selected="false" aria-controls="panel-listening" tabindex="-1">
+        2. Listening (9 pts)
+      </button>
+      <button type="button" role="tab" id="tab-writing" class="skill-nav__tab" aria-selected="false" aria-controls="panel-writing" tabindex="-1">
+        3. Writing (2 tareas)
+      </button>
+      <button type="button" role="tab" id="tab-speaking" class="skill-nav__tab" aria-selected="false" aria-controls="panel-speaking" tabindex="-1">
+        4. Speaking (3 partes)
+      </button>
+    </div>
+  </nav>
+
+  <main id="main-content" class="app-main" tabindex="-1">
+    <!-- ==================== MÓDULO 1: READING ==================== -->
+    <section id="panel-reading" class="module-panel" role="tabpanel" aria-labelledby="tab-reading">
+      <header class="module-panel__header">
+        <div>
+          <h2 class="module-panel__title">Module 1: Reading (B1–B2)</h2>
+          <p class="module-panel__desc">Completa las 3 tareas de comprensión lectora y uso de la lengua.</p>
+        </div>
+        <!-- Temporizador de Sección Reading -->
+        <div class="section-timer" role="region" aria-label="Temporizador sección Reading">
+          <span class="section-timer__label">Tiempo Reading:</span>
+          <output id="timer-display-reading" class="section-timer__clock">25:00</output>
+          <div class="section-timer__btns">
+            <button type="button" class="btn btn--sm btn--primary" data-timer-action="start" data-section="reading">Iniciar</button>
+            <button type="button" class="btn btn--sm btn--secondary" data-timer-action="pause" data-section="reading">Pausar</button>
+            <button type="button" class="btn btn--sm btn--ghost" data-timer-action="reset" data-section="reading">Reiniciar</button>
+          </div>
+        </div>
+      </header>
+
+      <!-- Reading Task 1A: Multiple-Choice Cloze -->
+      <article class="task-card" aria-labelledby="r1a-title">
+        <div class="task-card__meta">
+          <span class="tag tag--level">Nivel B2</span>
+          <span class="tag tag--type">Multiple-Choice Cloze</span>
+        </div>
+        <h3 id="r1a-title" class="task-card__title">Task 1A: The Power of the Five Senses</h3>
+        <p class="task-card__instructions" lang="en">Choose the best word (A, B, C or D) for each gap (1–5).</p>
+
+        <form id="form-reading-mc" class="exam-form" novalidate>
+          <div class="reading-passage" lang="en">
+            Most of us probably feel that our sense of smell is less important than our senses of
+            <label for="mc-1" class="sr-only">Gap 1</label>
+            <select id="mc-1" name="mc-1" class="inline-select">
+              <option value="">(1) ---</option>
+              <option value="seeing">A. seeing</option>
+              <option value="view">B. view</option>
+              <option value="sight">C. sight</option>
+              <option value="vision">D. vision</option>
+            </select>,
+            hearing, touch or taste. Yet a sudden perfume – the sweet smell of freshly cut grass, newly baked bread or even the odour of petrol – can
+            <label for="mc-2" class="sr-only">Gap 2</label>
+            <select id="mc-2" name="mc-2" class="inline-select">
+              <option value="">(2) ---</option>
+              <option value="instantly">A. instantly</option>
+              <option value="presently">B. presently</option>
+              <option value="accurately">C. accurately</option>
+              <option value="correctly">D. correctly</option>
+            </select>
+            carry us off to distant places in our memories. Smells create a powerful emotional
+            <label for="mc-3" class="sr-only">Gap 3</label>
+            <select id="mc-3" name="mc-3" class="inline-select">
+              <option value="">(3) ---</option>
+              <option value="conclusion">A. conclusion</option>
+              <option value="response">B. response</option>
+              <option value="consequence">C. consequence</option>
+              <option value="reply">D. reply</option>
+            </select>.
+            Marketing departments around the world
+            <label for="mc-4" class="sr-only">Gap 4</label>
+            <select id="mc-4" name="mc-4" class="inline-select">
+              <option value="">(4) ---</option>
+              <option value="profit">A. profit</option>
+              <option value="operate">B. operate</option>
+              <option value="benefit">C. benefit</option>
+              <option value="exploit">D. exploit</option>
+            </select>
+            this whenever they can in order to help us part with our hard-earned cash. A recent study by an Indian hotel, for example, found that its guests agreed that scent was a
+            <label for="mc-5" class="sr-only">Gap 5</label>
+            <select id="mc-5" name="mc-5" class="inline-select">
+              <option value="">(5) ---</option>
+              <option value="key">A. key</option>
+              <option value="first">B. first</option>
+              <option value="top">C. top</option>
+              <option value="high">D. high</option>
+            </select>
+            factor in the enjoyment of their hotel stay, along with the quality of the hotel’s food and the behaviour of its staff.
+          </div>
+          <div class="task-card__actions">
+            <button type="submit" class="btn btn--primary">Calificar Task 1A</button>
+            <button type="button" class="btn btn--secondary" data-reset="form-reading-mc">Reiniciar</button>
+          </div>
+          <div id="feedback-reading-mc" class="feedback-box" role="status" aria-live="polite" hidden></div>
+        </form>
+      </article>
+
+      <!-- Reading Task 1B: Open Cloze -->
+      <article class="task-card" aria-labelledby="r1b-title">
+        <div class="task-card__meta">
+          <span class="tag tag--level">Nivel B1–B2</span>
+          <span class="tag tag--type">Open Cloze (1 palabra)</span>
+        </div>
+        <h3 id="r1b-title" class="task-card__title">Task 1B: A Good Night’s Sleep</h3>
+        <p class="task-card__instructions" lang="en">Type the <strong>one</strong> missing word for each gap (1–5).</p>
+
+        <form id="form-reading-oc" class="exam-form" novalidate>
+          <div class="reading-passage" lang="en">
+            For people of all ages, getting a good night’s sleep can feel quite challenging, but
+            <label for="oc-1" class="sr-only">Gap 1</label>
+            <input type="text" id="oc-1" name="oc-1" class="inline-input" placeholder="(1)" autocomplete="off" spellcheck="false">
+            are many things you can do to improve your sleep. Creating a bedtime routine is just
+            <label for="oc-2" class="sr-only">Gap 2</label>
+            <input type="text" id="oc-2" name="oc-2" class="inline-input" placeholder="(2)" autocomplete="off" spellcheck="false">
+            relaxing for an adult as it is for a small child. Take time before bed to relax in a warm bath or empty your head by writing a journal. Do whatever
+            <label for="oc-3" class="sr-only">Gap 3</label>
+            <input type="text" id="oc-3" name="oc-3" class="inline-input" placeholder="(3)" autocomplete="off" spellcheck="false">
+            necessary to help you switch off. You might want to end the day with some gentle yoga moves. You should also make your bedtime reading different to all the magazines, newspapers and books
+            <label for="oc-4" class="sr-only">Gap 4</label>
+            <input type="text" id="oc-4" name="oc-4" class="inline-input" placeholder="(4)" autocomplete="off" spellcheck="false">
+            normally vie for your attention. During the day be as active as possible. Even gentle exercise
+            <label for="oc-5" class="sr-only">Gap 5</label>
+            <input type="text" id="oc-5" name="oc-5" class="inline-input" placeholder="(5)" autocomplete="off" spellcheck="false">
+            as walking and swimming will help you feel awake during the day while calming your mind and helping you sleep better at night.
+          </div>
+          <div class="task-card__actions">
+            <button type="submit" class="btn btn--primary">Calificar Task 1B</button>
+            <button type="button" class="btn btn--secondary" data-reset="form-reading-oc">Reiniciar</button>
+          </div>
+          <div id="feedback-reading-oc" class="feedback-box" role="status" aria-live="polite" hidden></div>
+        </form>
+      </article>
+
+      <!-- Reading Task 1C: Gapped-Text Sentences (Nueva del cuaderno Lesson 8) -->
+      <article class="task-card" aria-labelledby="r1c-title">
+        <div class="task-card__meta">
+          <span class="tag tag--level">Nivel B1–B2</span>
+          <span class="tag tag--type">Gapped-Text Sentences</span>
+        </div>
+        <h3 id="r1c-title" class="task-card__title">Task 1C: Studying and Swimming</h3>
+        <p class="task-card__instructions" lang="en">Read the text and choose the correct sentence (A–H) for each gap (1–5). Three sentences are not needed.</p>
+
+        <div class="sentence-bank" lang="en" aria-label="Banco de oraciones">
+          <p><strong>Available Sentences:</strong></p>
+          <ul>
+            <li><strong>A.</strong> I don’t know when it’ll happen, but I want to be ready.</li>
+            <li><strong>B.</strong> My next one is the World Swimming Championships in Japan.</li>
+            <li><strong>C.</strong> I think swimming feels more like a game.</li>
+            <li><strong>D.</strong> People often ask me how I find time for both.</li>
+            <li><strong>E.</strong> It was in France, where I went with my high school.</li>
+            <li><strong>F.</strong> As well as all that, I enjoy playing the piano.</li>
+            <li><strong>G.</strong> That’s a skill I never have to practise.</li>
+            <li><strong>H.</strong> But doing well in this sport is not easy.</li>
+          </ul>
+        </div>
+
+        <form id="form-reading-gap" class="exam-form" novalidate>
+          <div class="reading-passage" lang="en">
+            <p>
+              I first went swimming when I was only three years old. It was good to start when I was so young because at that age you are less likely to be frightened of getting in the water.
+              <label for="gap-1" class="sr-only">Gap 1</label>
+              <select id="gap-1" name="gap-1" class="inline-select">
+                <option value="">(1) Elige oración ---</option>
+                <option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option>
+                <option value="E">E</option><option value="F">F</option><option value="G">G</option><option value="H">H</option>
+              </select>
+              That’s probably why it’s always seemed fun to me. Now I swim every day and I find that it gives me time to think and it helps me to relax.
+            </p>
+            <p>
+              Each time I swim, I try to go faster than last time. I think I’m succeeding because last year, when I was 15, I became the 400m champion in my region.
+              <label for="gap-2" class="sr-only">Gap 2</label>
+              <select id="gap-2" name="gap-2" class="inline-select">
+                <option value="">(2) Elige oración ---</option>
+                <option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option>
+                <option value="E">E</option><option value="F">F</option><option value="G">G</option><option value="H">H</option>
+              </select>
+              For example, swimming practice takes two hours every night, and I go twice every Saturday. I also have to do workouts in the gym every day.
+            </p>
+            <p>
+              After training, it’s hard to do any studying because I’m so tired.
+              <label for="gap-3" class="sr-only">Gap 3</label>
+              <select id="gap-3" name="gap-3" class="inline-select">
+                <option value="">(3) Elige oración ---</option>
+                <option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option>
+                <option value="E">E</option><option value="F">F</option><option value="G">G</option><option value="H">H</option>
+              </select>
+              The way I do it is by writing down all the schoolwork I have to do and all my training times into a weekly timetable, which I have to follow. And I go out with my friends whenever I can find a free moment.
+              <label for="gap-4" class="sr-only">Gap 4</label>
+              <select id="gap-4" name="gap-4" class="inline-select">
+                <option value="">(4) Elige oración ---</option>
+                <option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option>
+                <option value="E">E</option><option value="F">F</option><option value="G">G</option><option value="H">H</option>
+              </select>
+              That’s something my grandmother taught me to do before I did so much swimming.
+            </p>
+            <p>
+              My sport has taken me all over Europe for competitions.
+              <label for="gap-5" class="sr-only">Gap 5</label>
+              <select id="gap-5" name="gap-5" class="inline-select">
+                <option value="">(5) Elige oración ---</option>
+                <option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option>
+                <option value="E">E</option><option value="F">F</option><option value="G">G</option><option value="H">H</option>
+              </select>
+              I’m really excited about that. I’d also like to study at university, maybe in the USA, but for now, I just have to think about getting faster in the pool.
+            </p>
+          </div>
+          <div class="task-card__actions">
+            <button type="submit" class="btn btn--primary">Calificar Task 1C</button>
+            <button type="button" class="btn btn--secondary" data-reset="form-reading-gap">Reiniciar</button>
+          </div>
+          <div id="feedback-reading-gap" class="feedback-box" role="status" aria-live="polite" hidden></div>
+        </form>
+      </article>
+    </section>
+
+    <!-- ==================== MÓDULO 2: LISTENING ==================== -->
+    <section id="panel-listening" class="module-panel" role="tabpanel" aria-labelledby="tab-listening" hidden>
+      <header class="module-panel__header">
+        <div>
+          <h2 class="module-panel__title">Module 2: Listening (B1–C1)</h2>
+          <p class="module-panel__desc">Cada grabación puede escucharse un máximo de <strong>2 veces</strong>, igual que en el examen oficial.</p>
+        </div>
+        <!-- Temporizador de Sección Listening -->
+        <div class="section-timer" role="region" aria-label="Temporizador sección Listening">
+          <span class="section-timer__label">Tiempo Listening:</span>
+          <output id="timer-display-listening" class="section-timer__clock">20:00</output>
+          <div class="section-timer__btns">
+            <button type="button" class="btn btn--sm btn--primary" data-timer-action="start" data-section="listening">Iniciar</button>
+            <button type="button" class="btn btn--sm btn--secondary" data-timer-action="pause" data-section="listening">Pausar</button>
+            <button type="button" class="btn btn--sm btn--ghost" data-timer-action="reset" data-section="listening">Reiniciar</button>
+          </div>
+        </div>
+      </header>
+
+      <!-- Listening Task 2A: Note Completion -->
+      <article class="task-card" aria-labelledby="l2a-title">
+        <div class="task-card__meta">
+          <span class="tag tag--level">Nivel C1</span>
+          <span class="tag tag--type">Note Completion (Máx. 3 palabras)</span>
+        </div>
+        <h3 id="l2a-title" class="task-card__title">Task 2A: Extreme Sports – BASE Jumping</h3>
+        <p class="task-card__instructions" lang="en">Listen to Lucy Townsend and complete the sentences with <strong>no more than three words</strong>.</p>
+
+        <div class="audio-player" role="region" aria-label="Reproductor Task 2A">
+          <div class="audio-player__controls">
+            <button type="button" class="btn btn--primary" data-audio-play="audio1">
+              ▶ Reproducir Audio 2A (<span id="plays-left-audio1">2</span> restantes)
+            </button>
+            <button type="button" class="btn btn--secondary" data-audio-stop="audio1" disabled>■ Detener</button>
+            <button type="button" class="btn btn--ghost" data-toggle-target="transcript-audio1" aria-expanded="false">Ver Transcripción</button>
+          </div>
+          <p id="status-audio1" class="audio-player__status" aria-live="polite">Listo para reproducir.</p>
+          <details id="transcript-audio1" class="transcript-drawer" hidden>
+            <summary class="transcript-drawer__summary">Transcripción Oficial (Lesson 4)</summary>
+            <p class="transcript-drawer__text" lang="en">
+              "Hello. I’m Lucy Townsend and I’m going to talk about the sport of BASE jumping. BASE is an acronym, for the four types of objects that BASE jumpers launch from. The B stands for buildings – in fact people often associate the sport with jumping from skyscrapers, as that attracts media attention. The A is for antennas or aerials, and the S for spans – generally bridges. The E is earth – nature, I guess you could say. Jumping off cliffs, for example. Doing that gives me an incredible rush! Mountain tops are often used too. You have to be brave for that! I learned to sky dive before attempting BASE jumping. With BASE jumping, you go straight from standing still to falling, so you get the same feeling as when you speed down the hill of a roller coaster. When you jump from a plane, you’re already in motion, so that falling sensation isn’t there. It’s like you’re on a cloud of air. Some BASE jumpers wear wingsuits. Wingsuit flyers can reach speeds of 125 miles per hour, but they have to keep adjusting their body position to maintain their speed. I haven't jumped in one of those suits. I leave that to the more experienced BASE jumpers. You’ve probably seen them doing tricks on videos, gliding in close proximity to the structure they launched from. These are precision moves, and should only be attempted by those who’ve previously completed a considerable number of standard base jumps. When you look back at the equipment BASE jumpers used in the early days, it wasn't particularly compact, for example. Given that base jumpers generally have their helmets and body armour with them as they climb up, this is the main reason why the gear's changed as the sport's become more popular."
+            </p>
+          </details>
+        </div>
+
+        <form id="form-listening-notes" class="exam-form" novalidate>
+          <ol class="notes-list" lang="en">
+            <li class="notes-list__item">
+              <label for="ls-1">Lucy prefers launching from</label>
+              <input type="text" id="ls-1" name="ls-1" class="inline-input inline-input--wide" placeholder="1–3 words" autocomplete="off">
+              <span>when she does BASE jumping.</span>
+            </li>
+            <li class="notes-list__item">
+              <label for="ls-2">BASE jumping is like being on a</label>
+              <input type="text" id="ls-2" name="ls-2" class="inline-input inline-input--wide" placeholder="1–3 words" autocomplete="off">
+              <span>, in Lucy’s opinion, making it different from sky diving.</span>
+            </li>
+            <li class="notes-list__item">
+              <label for="ls-3">Lucy explains why a BASE jumper who wears a wingsuit needs to modify their</label>
+              <input type="text" id="ls-3" name="ls-3" class="inline-input inline-input--wide" placeholder="1–3 words" autocomplete="off">
+              <span>during a jump.</span>
+            </li>
+            <li class="notes-list__item">
+              <label for="ls-4">Lucy uses the term</label>
+              <input type="text" id="ls-4" name="ls-4" class="inline-input inline-input--wide" placeholder="1–3 words" autocomplete="off">
+              <span>to refer to the tricks which are best left to the very experienced BASE jumpers.</span>
+            </li>
+            <li class="notes-list__item">
+              <label for="ls-5">The equipment used by BASE jumpers has become more</label>
+              <input type="text" id="ls-5" name="ls-5" class="inline-input inline-input--wide" placeholder="1–3 words" autocomplete="off">
+              <span>over time, as Lucy explains.</span>
+            </li>
+          </ol>
+          <div class="task-card__actions">
+            <button type="submit" class="btn btn--primary">Calificar Task 2A</button>
+            <button type="button" class="btn btn--secondary" data-reset="form-listening-notes">Reiniciar</button>
+          </div>
+          <div id="feedback-listening-notes" class="feedback-box" role="status" aria-live="polite" hidden></div>
+        </form>
+      </article>
+
+      <!-- Listening Task 2B: Extended Multiple Choice (Nueva del cuaderno Lesson 3) -->
+      <article class="task-card" aria-labelledby="l2b-title">
+        <div class="task-card__meta">
+          <span class="tag tag--level">Nivel B1–B2</span>
+          <span class="tag tag--type">Extended Listening · Multiple Choice</span>
+        </div>
+        <h3 id="l2b-title" class="task-card__title">Task 2B: Interview with a Personal Trainer</h3>
+        <p class="task-card__instructions" lang="en">Listen to Bruce talking about his career as a personal trainer and choose the correct answer (A, B or C).</p>
+
+        <div class="audio-player" role="region" aria-label="Reproductor Task 2B">
+          <div class="audio-player__controls">
+            <button type="button" class="btn btn--primary" data-audio-play="audio2">
+              ▶ Reproducir Audio 2B (<span id="plays-left-audio2">2</span> restantes)
+            </button>
+            <button type="button" class="btn btn--secondary" data-audio-stop="audio2" disabled>■ Detener</button>
+            <button type="button" class="btn btn--ghost" data-toggle-target="transcript-audio2" aria-expanded="false">Ver Transcripción</button>
+          </div>
+          <p id="status-audio2" class="audio-player__status" aria-live="polite">Listo para reproducir.</p>
+          <details id="transcript-audio2" class="transcript-drawer" hidden>
+            <summary class="transcript-drawer__summary">Transcripción Oficial (Lesson 3)</summary>
+            <p class="transcript-drawer__text" lang="en">
+              "Interviewer: Good morning Bruce. First, can you tell us what you do? Bruce: Yes, until last year, I worked in a gym as a fitness instructor, showing people how to use the exercise equipment and leading exercise classes, but I’m now a personal trainer, working with one person at a time. Interviewer: What do you like about your job? Bruce: Most of all though it’s helping people to turn their lives around. Some of my clients have lost an incredible amount of weight or recovered from other problems. Every day is different. Interviewer: Is there anything you really dislike about it? Bruce: I often have to work evenings and weekends because that’s when most people prefer to exercise. And I really wish that wasn’t the case. The money's not very good, even for people with good qualifications. But I’m doing what I love, so I don’t mind that. Interviewer: What kind of person do you need to be to succeed in this job? Bruce: Well, a perfect powerful body isn’t essential, but a passion for health and fitness is, plus great communication skills. You need an ability to make your clients feel confident, and you mustn’t expect too much from them too soon."
+            </p>
+          </details>
+        </div>
+
+        <form id="form-listening-mc" class="exam-form" novalidate>
+          <fieldset class="mcq-fieldset" lang="en">
+            <legend class="mcq-fieldset__legend">1. How has Bruce’s job changed since last year?</legend>
+            <label class="radio-option"><input type="radio" name="lmc-1" value="A"> A. He now leads larger group fitness classes.</label>
+            <label class="radio-option"><input type="radio" name="lmc-1" value="B"> B. He now trains individual clients one-on-one.</label>
+            <label class="radio-option"><input type="radio" name="lmc-1" value="C"> C. He stopped working in gyms altogether.</label>
+          </fieldset>
+
+          <fieldset class="mcq-fieldset" lang="en">
+            <legend class="mcq-fieldset__legend">2. What does Bruce consider the biggest reward of his job?</legend>
+            <label class="radio-option"><input type="radio" name="lmc-2" value="A"> A. Earning money from his personal hobby.</label>
+            <label class="radio-option"><input type="radio" name="lmc-2" value="B"> B. Working exclusively with top professional athletes.</label>
+            <label class="radio-option"><input type="radio" name="lmc-2" value="C"> C. Helping clients make major positive changes in their lives.</label>
+          </fieldset>
+
+          <fieldset class="mcq-fieldset" lang="en">
+            <legend class="mcq-fieldset__legend">3. What aspect of the job does Bruce genuinely dislike?</legend>
+            <label class="radio-option"><input type="radio" name="lmc-3" value="A"> A. Having to work during evenings and weekends.</label>
+            <label class="radio-option"><input type="radio" name="lmc-3" value="B"> B. Running outdoors during cold winter mornings.</label>
+            <label class="radio-option"><input type="radio" name="lmc-3" value="C"> C. Receiving a relatively low salary.</label>
+          </fieldset>
+
+          <fieldset class="mcq-fieldset" lang="en">
+            <legend class="mcq-fieldset__legend">4. According to Bruce, what is crucial to succeed as a personal trainer?</legend>
+            <label class="radio-option"><input type="radio" name="lmc-4" value="A"> A. Having an athletic, muscular physique.</label>
+            <label class="radio-option"><input type="radio" name="lmc-4" value="B"> B. Being patient and not demanding too much too quickly.</label>
+            <label class="radio-option"><input type="radio" name="lmc-4" value="C"> C. Holding advanced university degrees in sports science.</label>
+          </fieldset>
+
+          <div class="task-card__actions">
+            <button type="submit" class="btn btn--primary">Calificar Task 2B</button>
+            <button type="button" class="btn btn--secondary" data-reset="form-listening-mc">Reiniciar</button>
+          </div>
+          <div id="feedback-listening-mc" class="feedback-box" role="status" aria-live="polite" hidden></div>
+        </form>
+      </article>
+    </section>
+
+    <!-- ==================== MÓDULO 3: WRITING ==================== -->
+    <section id="panel-writing" class="module-panel" role="tabpanel" aria-labelledby="tab-writing" hidden>
+      <header class="module-panel__header">
+        <div>
+          <h2 class="module-panel__title">Module 3: Writing (B1–C1)</h2>
+          <p class="module-panel__desc">Tiempo oficial combinado: <strong>45 minutos</strong> para ambas tareas. Tus textos se incluirán en el reporte PDF.</p>
+        </div>
+        <!-- Temporizador de Sección Writing -->
+        <div class="section-timer" role="region" aria-label="Temporizador sección Writing">
+          <span class="section-timer__label">Tiempo Writing:</span>
+          <output id="timer-display-writing" class="section-timer__clock">45:00</output>
+          <div class="section-timer__btns">
+            <button type="button" class="btn btn--sm btn--primary" data-timer-action="start" data-section="writing">Iniciar</button>
+            <button type="button" class="btn btn--sm btn--secondary" data-timer-action="pause" data-section="writing">Pausar</button>
+            <button type="button" class="btn btn--sm btn--ghost" data-timer-action="reset" data-section="writing">Reiniciar</button>
+          </div>
+        </div>
+      </header>
+
+      <!-- Writing Part 1 -->
+      <article class="task-card" aria-labelledby="w1-title">
+        <div class="task-card__meta">
+          <span class="tag tag--level">Nivel B1–B2</span>
+          <span class="tag tag--type">Part 1 · Functional Email (Mín. 50 palabras)</span>
+        </div>
+        <h3 id="w1-title" class="task-card__title">Writing Part 1: Language Learning Advice</h3>
+        <div class="prompt-box" lang="en">
+          <blockquote>
+            "It’s great that you can speak English so we can talk and write to each other, but now I’d like to learn your language. Is it easy to learn? How can I learn your language? I want to learn it quickly! Write and tell me. — Alex"
+          </blockquote>
+          <p><strong>Write an email to Alex:</strong> (1) say how easy it is to learn your language, (2) suggest some good ways to learn it, (3) offer to help Alex learn.</p>
+        </div>
+
+        <div class="phrase-bank">
+          <span class="phrase-bank__label">Estructuras útiles:</span>
+          <button type="button" class="chip" data-insert-target="textarea-w1" data-phrase="If I were you, I would start by... ">If I were you...</button>
+          <button type="button" class="chip" data-insert-target="textarea-w1" data-phrase="Why don't you try watching... ">Why don't you...</button>
+          <button type="button" class="chip" data-insert-target="textarea-w1" data-phrase="I'd be more than happy to help you practise... ">I'd be happy to help...</button>
+        </div>
+
+        <label for="textarea-w1" class="sr-only">Respuesta Writing Part 1</label>
+        <textarea id="textarea-w1" class="writing-editor" rows="7" lang="en" placeholder="Hi Alex,&#10;&#10;It's great to hear that you want to learn my language..."></textarea>
+        <div class="editor-footer">
+          <span id="word-count-w1" class="word-counter" aria-live="polite">Palabras: 0 / 50 mín.</span>
+          <button type="button" class="btn btn--primary" data-eval-writing="w1">Verificar Criterios Part 1</button>
+        </div>
+        <div id="feedback-w1" class="feedback-box" role="status" aria-live="polite" hidden></div>
+      </article>
+
+      <!-- Writing Part 2 -->
+      <article class="task-card" aria-labelledby="w2-title">
+        <div class="task-card__meta">
+          <span class="tag tag--level">Nivel B2–C1</span>
+          <span class="tag tag--type">Part 2 · Opinion Essay (Mín. 180 palabras)</span>
+        </div>
+        <h3 id="w2-title" class="task-card__title">Writing Part 2: Compulsory Team Sports in Schools</h3>
+        <div class="prompt-box" lang="en">
+          <blockquote>
+            <strong>"Playing a team sport should be compulsory for students in all schools."</strong>
+          </blockquote>
+          <p>Write an <strong>essay</strong> indicating to what extent you agree or disagree. Consider: <em>academic grades</em>, <em>valuable life skills</em>, and <em>enjoying physical exercise vs. competition</em>.</p>
+        </div>
+
+        <div class="phrase-bank">
+          <span class="phrase-bank__label">Conectores académicos:</span>
+          <button type="button" class="chip" data-insert-target="textarea-w2" data-phrase="On the one hand, proponents argue that... ">On the one hand...</button>
+          <button type="button" class="chip" data-insert-target="textarea-w2" data-phrase="Nevertheless, it is equally important to consider... ">Nevertheless...</button>
+          <button type="button" class="chip" data-insert-target="textarea-w2" data-phrase="All things considered, I firmly believe that... ">All things considered...</button>
+        </div>
+
+        <label for="textarea-w2" class="sr-only">Respuesta Writing Part 2</label>
+        <textarea id="textarea-w2" class="writing-editor" rows="10" lang="en" placeholder="Introduction: State your position clearly..."></textarea>
+        <div class="editor-footer">
+          <span id="word-count-w2" class="word-counter" aria-live="polite">Palabras: 0 / 180 mín.</span>
+          <button type="button" class="btn btn--primary" data-eval-writing="w2">Verificar Criterios Part 2</button>
+        </div>
+        <div id="feedback-w2" class="feedback-box" role="status" aria-live="polite" hidden></div>
+      </article>
+    </section>
+
+    <!-- ==================== MÓDULO 4: SPEAKING ==================== -->
+    <section id="panel-speaking" class="module-panel" role="tabpanel" aria-labelledby="tab-speaking" hidden>
+      <header class="module-panel__header">
+        <div>
+          <h2 class="module-panel__title">Module 4: Speaking (B1–C1)</h2>
+          <p class="module-panel__desc">Selecciona cualquiera de las 3 tareas oficiales del cuaderno y practica con tiempos reales.</p>
+        </div>
+        <!-- Temporizador General de Sección Speaking -->
+        <div class="section-timer" role="region" aria-label="Temporizador global sección Speaking">
+          <span class="section-timer__label">Sesión Speaking:</span>
+          <output id="timer-display-speaking" class="section-timer__clock">15:00</output>
+          <div class="section-timer__btns">
+            <button type="button" class="btn btn--sm btn--primary" data-timer-action="start" data-section="speaking">Iniciar</button>
+            <button type="button" class="btn btn--sm btn--secondary" data-timer-action="pause" data-section="speaking">Pausar</button>
+            <button type="button" class="btn btn--sm btn--ghost" data-timer-action="reset" data-section="speaking">Reiniciar</button>
+          </div>
+        </div>
+      </header>
+
+      <article class="task-card" aria-labelledby="sp-title">
+        <div class="speaking-task-selector">
+          <label for="speaking-prompt-select" class="form-field__label">Selecciona la Tarea Oral (del Cuaderno Cambridge):</label>
+          <select id="speaking-prompt-select" class="form-field__input">
+            <option value="part1">Part 1: Your Favourite Room (40s prep / 60s talk · B1–B2)</option>
+            <option value="part3">Part 3: Advising a Friend on Volunteering (40s prep / 60s talk · B2–C1)</option>
+            <option value="part4" selected>Part 4: Social Media & Relationships (40s prep / 90s talk · B2–C1)</option>
+          </select>
+        </div>
+
+        <div id="speaking-prompt-box" class="prompt-box" lang="en"></div>
+
+        <!-- Estudio de Grabación Cronometrado -->
+        <div class="speaking-studio" role="region" aria-label="Cronómetro de tarea y grabadora">
+          <div class="timer-display">
+            <span id="task-timer-phase" class="timer-display__phase">Fase: Listo para iniciar</span>
+            <output id="task-timer-clock" class="timer-display__clock">00:40</output>
+          </div>
+
+          <div class="speaking-studio__controls">
+            <button type="button" id="btn-start-prep" class="btn btn--primary">1. Preparar (40s)</button>
+            <button type="button" id="btn-start-speak" class="btn btn--accent">2. Grabar Respuesta</button>
+            <button type="button" id="btn-stop-speak" class="btn btn--secondary" disabled>■ Detener</button>
+          </div>
+
+          <div class="notes-scratchpad">
+            <label for="speaking-notes" class="notes-scratchpad__label">Notas rápidas de preparación:</label>
+            <input type="text" id="speaking-notes" class="inline-input inline-input--full" lang="en" placeholder="Key ideas, linking words, conclusion...">
+          </div>
+
+          <div id="audio-playback-container" class="playback-box" hidden>
+            <p class="playback-box__title">Grabación registrada (escúchate para autoevaluar fluidez y cohesión):</p>
+            <audio id="recorded-audio" controls class="playback-box__player"></audio>
+          </div>
+        </div>
+
+        <details class="transcript-drawer">
+          <summary class="transcript-drawer__summary">Ver Respuesta Modelo y Expresiones Clave</summary>
+          <p id="speaking-model-text" class="transcript-drawer__text" lang="en"></p>
+        </details>
+      </article>
+    </section>
+  </main>
+
+  <!-- Contenedor Exclusivo para Impresión / Exportación PDF -->
+  <section id="pdf-print-report" class="print-report" aria-hidden="true"></section>
+
+  <footer class="app-footer" role="contentinfo">
+    <p>Linguaskill University Trainer · Estándar WCAG 2.1 AA · Material adaptado de Cambridge Assessment English by Abraham Rivera.</p>
+  </footer>
+
+  <script src="app.js" defer></script>
+</body>
+</html>
